@@ -19,7 +19,7 @@ export default function TertiaryHome({products}:{products:Product[]}){
    const context=gsap.context(()=>{
      ScrollTrigger.create({trigger:'#tertiary-arrival',start:'top top',end:'bottom top',onUpdate:self=>{sceneMotion.heroScroll=self.progress;sceneMotion.phase='arrival'},onLeave:()=>{sceneMotion.phase='hidden'},onEnterBack:()=>{sceneMotion.phase='arrival'}});
      ScrollTrigger.create({trigger:'#tertiary-orbit',start:'top 70%',end:'bottom top',onEnter:()=>{sceneMotion.phase='hidden'},onEnterBack:()=>{sceneMotion.phase='hidden'}});
-     if(!reduced)ScrollTrigger.create({trigger:'#tertiary-print',start:'top top',end:()=>`+=${Math.round(window.innerHeight*(window.innerWidth<760?1.9:2.6))}`,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true,onUpdate:self=>{printerMotion.progress=self.progress}});
+     if(!reduced)ScrollTrigger.create({trigger:'#tertiary-print',start:'top 90%',end:'bottom 10%',invalidateOnRefresh:true,onUpdate:self=>{printerMotion.progress=self.progress},onLeave:()=>{printerMotion.progress=1},onLeaveBack:()=>{printerMotion.progress=0}});
      if(!reduced){gsap.from('.tertiary-home .hero-copy > *',{opacity:0,y:34,duration:1.05,stagger:.1,ease:'power3.out',delay:.1})}
    });
    ScrollTrigger.refresh();

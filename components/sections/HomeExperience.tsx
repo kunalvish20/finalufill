@@ -30,7 +30,7 @@ useEffect(()=>{
    if(!reduce){
      gsap.from('.hero-copy > *',{y:40,opacity:0,duration:1.2,stagger:.12,ease:'power3.out',delay:.18});
      gsap.utils.toArray<HTMLElement>('.rise').forEach(el=>gsap.fromTo(el,{y:45,opacity:0},{y:0,opacity:1,duration:1.15,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}}));
-     ScrollTrigger.create({trigger:'#creation',start:'top top',end:()=>`+=${Math.round(window.innerHeight*(window.innerWidth<760?1.9:2.6))}`,pin:true,pinSpacing:true,anticipatePin:1,invalidateOnRefresh:true,onUpdate:self=>{printerMotion.progress=self.progress;}});
+     ScrollTrigger.create({trigger:'#creation',start:'top 90%',end:'bottom 10%',invalidateOnRefresh:true,onUpdate:self=>{printerMotion.progress=self.progress;},onLeave:()=>{printerMotion.progress=1;},onLeaveBack:()=>{printerMotion.progress=0;}});
    }else{
      // The product morph handles its own reduced-motion fallback.
    }
