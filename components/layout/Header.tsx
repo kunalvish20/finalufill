@@ -1,0 +1,10 @@
+'use client';
+import Link from 'next/link';
+import {usePathname} from 'next/navigation';
+import {useState,useEffect} from 'react';
+import {ArrowUpRight,Menu,ShoppingBag,X,UserRound} from 'lucide-react';
+import {useCart} from '@/stores/cart';
+export function Header(){const pathname=usePathname();const [open,setOpen]=useState(false),[mounted,setMounted]=useState(false);const items=useCart(s=>s.items);useEffect(()=>setMounted(true),[]);useEffect(()=>setOpen(false),[pathname]);const count=mounted?items.reduce((n,i)=>n+i.quantity,0):0;return <>
+<div className="announcement">EXPLORE MATERIALS <span>✦</span> FIND YOUR COLOR <span>✦</span> MAKE YOUR NEXT IDEA</div>
+<header className={"site-nav "+(!['/','/tertiary-homepage'].includes(pathname)?'inner-nav':'')}><Link className="brand-logo" href="/" aria-label="UFILL3D home"><img src="/images/ufill3d-brand-logo.webp" width="1429" height="252" alt="UFILL3D"/></Link><nav className="desktop-links" aria-label="Main navigation"><Link href="/">HOME</Link><Link href="/secondary-home">SHOP EXPERIENCE</Link><Link href="/tertiary-homepage">3D JOURNEY</Link><Link href="/shop">FILAMENTS</Link><Link href="/customize">COLOR LAB</Link><Link href="/about">ABOUT</Link></nav><div className="nav-right"><Link className="nav-account" href="/account" aria-label="Account"><UserRound size={19}/></Link><Link href="/cart" className="cart-link" aria-label={`Cart with ${count} items`}><ShoppingBag size={19}/><small>{count}</small></Link><button className="menu-toggle" onClick={()=>setOpen(!open)} aria-expanded={open} aria-label="Toggle navigation">{open?<X/>:<Menu/>}</button><Link href="/shop" className="nav-shop">SHOP FILAMENT <ArrowUpRight size={16}/></Link></div></header>
+{open&&<nav className="mobile-menu" aria-label="Mobile"><Link href="/">Home</Link><Link href="/secondary-home">Shop experience</Link><Link href="/tertiary-homepage">3D journey</Link><Link href="/shop">All filaments</Link><Link href="/customize">Color lab</Link><Link href="/about">About UFILL3D</Link><Link href="/faq">FAQs</Link><Link href="/contact">Contact</Link><Link href="/account">My account</Link></nav>}</>}

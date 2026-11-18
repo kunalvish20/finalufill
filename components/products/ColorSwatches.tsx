@@ -1,0 +1,3 @@
+'use client';
+import type {FilamentColor} from '@/types/store';
+export function ColorSwatches({colors,value,onChange,showLabel=true}:{colors:FilamentColor[];value:FilamentColor;onChange:(v:FilamentColor)=>void;showLabel?:boolean}){return <div className="swatches-wrap">{showLabel&&<div className="field-label">COLOR <span>{value.name}</span></div>}<div className="swatches" role="group" aria-label="Select filament color">{colors.map(c=><button key={c.name} type="button" title={c.name} aria-label={c.name} aria-pressed={c.name===value.name} onClick={()=>onChange(c)} className={'swatch '+(c.name===value.name?'active':'')} style={{'--swatch':c.hex} as React.CSSProperties}><span/></button>)}</div></div>}

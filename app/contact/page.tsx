@@ -1,0 +1,3 @@
+import {ContactForm} from '@/components/layout/ContactForm';
+export const metadata={title:'Contact'};
+export default function Contact(){return <main className="inner-main"><div className="inner-container"><div className="micro">UFILL3D / GET IN TOUCH</div><h1 className="site-heading">LET'S <em>TALK.</em></h1><p className="lead">Questions about a material, a color or an order? Tell us what you are working on and we will point you in the right direction.</p><div className="demo-notice" style={{maxWidth:650}}>This form works when the store database is connected. In demo mode, your message is not delivered.</div><ContactForm/></div></main>}

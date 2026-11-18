@@ -1,0 +1,6 @@
+'use client';
+import Link from 'next/link';
+import {useSearchParams} from 'next/navigation';
+import {useEffect,useState} from 'react';
+import {useCart} from '@/stores/cart';
+export function CheckoutStatus({failed=false}:{failed?:boolean}){const params=useSearchParams(),[cleared,setCleared]=useState(false),clear=useCart(s=>s.clear);const demo=params.get('demo')==='1',pending=params.get('pending')==='1',reference=params.get('reference');useEffect(()=>{if(demo&&!cleared){clear();setCleared(true)}},[demo,cleared,clear]);return <div className="status-banner"><div className="micro">{failed?'PAYMENT / NOT COMPLETED':demo?'DEMONSTRATION / ORDER PREVIEW':'CHECKOUT / STATUS PENDING'}</div><h1>{failed?'PAYMENT NOT COMPLETED.':demo?'DEMO ORDER RECEIVED.':'AWAITING PAYMENT CONFIRMATION.'}</h1><p style={{color:'#6b597b',lineHeight:1.6}}>{failed?'The payment was not completed. You can retry from checkout.':demo?'This is a simulated local order. No actual money was taken and no real order was stored.':'Your checkout was submitted. A signed server-side payment webhook must confirm payment before it is marked paid.'}</p>{reference&&<p style={{fontSize:12}}>REFERENCE: {reference}</p>}<Link href={failed?'/checkout':'/shop'} className="btn-primary">{failed?'TRY AGAIN':'CONTINUE EXPLORING'}</Link></div>}

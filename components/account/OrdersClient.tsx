@@ -1,0 +1,6 @@
+'use client';
+import {useEffect,useState} from 'react';
+import Link from 'next/link';
+import {browserSupabase} from '@/lib/supabase/client';
+import {money} from '@/lib/catalog';
+export function OrdersClient(){const sb=browserSupabase();const [orders,setOrders]=useState<any[]>([]),[state,setState]=useState('Loading…');useEffect(()=>{if(!sb){setState('Order history is unavailable in this preview.');return;}sb.auth.getUser().then(async r=>{if(!r.data.user){setState('Sign in to see your orders.');return;}const {data,error}=await sb.from('orders').select('*,order_items(*)').order('created_at',{ascending:false});setOrders(data||[]);setState(error?.message||'')})},[sb]);return <div>{state&&<p className="lead">{state} <Link href="/account" className="underlined-link">ACCOUNT</Link></p>}{orders.map(o=><div key={o.id} style={{padding:'28px 0',borderBottom:'1px solid #decfe9'}}><strong>{o.id.slice(0,8).toUpperCase()}</strong><span style={{marginLeft:20}}>{o.status.toUpperCase()}</span><span style={{float:'right'}}>{money(o.total_paise/100)}</span><p style={{color:'#7b6e86'}}>{new Date(o.created_at).toLocaleDateString('en-IN')}</p>{o.order_items?.map((i:any)=><p key={i.id}>{i.name} / {i.color_name} / {i.quantity} × {money(i.unit_price_paise/100)}</p>)}</div>)}{!state&&!orders.length&&<p>No orders to show yet.</p>}</div>}
